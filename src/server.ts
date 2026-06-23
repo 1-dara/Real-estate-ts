@@ -21,10 +21,15 @@ const swaggerOptions = {
         },
         servers: [
             {
+                url: 'https://real-estate-ts.onrender.com',
+                description: 'Production server',
+            },
+            {
                 url: 'http://localhost:3002',
                 description: 'Local server',
             },
         ],
+
         components: {
             securitySchemes: {
                 bearerAuth: {

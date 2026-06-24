@@ -47,11 +47,7 @@ const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/', (req, res) => {
-    res.json({
-        message: 'Real Estate API (TypeScript Edition) is running',
-        docs: '/docs',
-        version: '2.0.0'
-    });
+    res.redirect('/docs');
 });
 
 app.use('/api/auth', authRoutes);

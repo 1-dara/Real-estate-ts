@@ -47,7 +47,7 @@ export async function createProperty(req: AuthRequest, res: Response): Promise<v
             }
         });
 
-        await deletePattern('properties:*');
+        await deletePattern('re-ts:properties:*');
 
         res.status(201).json(property);
     } catch (error: any) {
@@ -62,7 +62,7 @@ export async function getProperties(req: Request, res: Response): Promise<void> 
             bedrooms, status, page = '1', limit = '10'
         } = req.query;
 
-        const cacheKey = `properties:city=${city}:type=${type}:min=${minPrice}:max=${maxPrice}:beds=${bedrooms}:status=${status}:page=${page}:limit=${limit}`;
+        const cacheKey = `re-ts:properties:city=${city}:type=${type}:min=${minPrice}:max=${maxPrice}:beds=${bedrooms}:status=${status}:page=${page}:limit=${limit}`;
 
         const cached = await getCache(cacheKey);
         if (cached) {
@@ -124,7 +124,7 @@ export async function getProperties(req: Request, res: Response): Promise<void> 
 
 export async function getProperty(req: Request, res: Response): Promise<void> {
     try {
-        const cacheKey = `property:${req.params.id}`;
+        const cacheKey = `re-ts:property:${req.params.id}`;
 
         const cached = await getCache(cacheKey);
         if (cached) {
@@ -195,8 +195,8 @@ export async function updateProperty(req: AuthRequest, res: Response): Promise<v
             }
         });
 
-        await deleteCache(`property:${req.params.id}`);
-        await deletePattern('properties:*');
+        await deleteCache(`re-ts:property:${req.params.id}`);
+        await deletePattern('re-ts:properties:*');
 
         res.json(property);
     } catch (error: any) {
@@ -223,8 +223,8 @@ export async function deleteProperty(req: AuthRequest, res: Response): Promise<v
         await prisma.review.deleteMany({ where: { propertyId: parseInt(req.params.id) } });
         await prisma.property.delete({ where: { id: parseInt(req.params.id) } });
 
-        await deleteCache(`property:${req.params.id}`);
-        await deletePattern('properties:*');
+        await deleteCache(`re-ts:property:${req.params.id}`);
+        await deletePattern('re-ts:properties:*');
 
         res.json({ message: 'Property deleted successfully' });
     } catch (error: any) {

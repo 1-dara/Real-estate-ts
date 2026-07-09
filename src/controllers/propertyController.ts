@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import prisma from '../lib/prisma.js';
 import cloudinary from '../lib/cloudinary.js';
 import { AuthRequest } from '../middleware/authMiddleware.js';
+import { getCache, setCache, deleteCache, deletePattern } from '../lib/redis.js';
 
 dotenv.config();
 
@@ -46,6 +47,8 @@ export async function createProperty(req: AuthRequest, res: Response): Promise<v
             }
         });
 
+        await deletePattern('properties:*');
+
         res.status(201).json(property);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -58,6 +61,14 @@ export async function getProperties(req: Request, res: Response): Promise<void> 
             city, type, minPrice, maxPrice,
             bedrooms, status, page = '1', limit = '10'
         } = req.query;
+
+        const cacheKey = `properties:city=${city}:type=${type}:min=${minPrice}:max=${maxPrice}:beds=${bedrooms}:status=${status}:page=${page}:limit=${limit}`;
+
+        const cached = await getCache(cacheKey);
+        if (cached) {
+            res.json(cached);
+            return;
+        }
 
         const where: any = {};
         if (city) where.city = { contains: city as string, mode: 'insensitive' };
@@ -96,12 +107,16 @@ export async function getProperties(req: Request, res: Response): Promise<void> 
             reviewCount: p.reviews.length
         }));
 
-        res.json({
+        const response = {
             total,
             page: pageNum,
             pages: Math.ceil(total / limitNum),
             properties: propertiesWithRating
-        });
+        };
+
+        await setCache(cacheKey, response, 300);
+
+        res.json(response);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
@@ -109,6 +124,14 @@ export async function getProperties(req: Request, res: Response): Promise<void> 
 
 export async function getProperty(req: Request, res: Response): Promise<void> {
     try {
+        const cacheKey = `property:${req.params.id}`;
+
+        const cached = await getCache(cacheKey);
+        if (cached) {
+            res.json(cached);
+            return;
+        }
+
         const property = await prisma.property.findUnique({
             where: { id: parseInt(req.params.id) },
             include: {
@@ -129,7 +152,11 @@ export async function getProperty(req: Request, res: Response): Promise<void> {
             ? property.reviews.reduce((sum, r) => sum + r.rating, 0) / property.reviews.length
             : null;
 
-        res.json({ ...property, averageRating });
+        const response = { ...property, averageRating };
+
+        await setCache(cacheKey, response, 300);
+
+        res.json(response);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
@@ -168,6 +195,9 @@ export async function updateProperty(req: AuthRequest, res: Response): Promise<v
             }
         });
 
+        await deleteCache(`property:${req.params.id}`);
+        await deletePattern('properties:*');
+
         res.json(property);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -192,6 +222,9 @@ export async function deleteProperty(req: AuthRequest, res: Response): Promise<v
 
         await prisma.review.deleteMany({ where: { propertyId: parseInt(req.params.id) } });
         await prisma.property.delete({ where: { id: parseInt(req.params.id) } });
+
+        await deleteCache(`property:${req.params.id}`);
+        await deletePattern('properties:*');
 
         res.json({ message: 'Property deleted successfully' });
     } catch (error: any) {

@@ -7,9 +7,12 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import cors from 'cors';
+
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const swaggerOptions = {
     definition: {

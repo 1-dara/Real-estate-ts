@@ -3,7 +3,9 @@
 A complete re-architecture of the original Python/FastAPI Real Estate API, rebuilt in **TypeScript** with **Node.js**, **Express**, **Prisma ORM**, and **PostgreSQL**. Deployed and live.
 
  **Live API Docs:** YOUR_RENDER_URL/docs
+
  **GitHub:** <https://github.com/1-dara/real-estate-ts>
+
  **Original Python Version:** <https://real-estate-api-1-6678.onrender.com/>
 
 -----
@@ -44,7 +46,7 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |Cloudinary|Image storage                        |
 |Multer    |File upload handling                 |
 |Render    |Deployment                           |
-|Redis     |Deployment                           |
+|Redis     |Caching layer for property/product/course listings|
 
 -----
 
@@ -152,6 +154,7 @@ http://localhost:3002/docs
 ## Author
 
 **Irene Peter-Okon Idara**
+
 Backend Engineer
- 1ireneokon@gmail.com
- github.com/1-dara
+- 1ireneokon@gmail.com
+- github.com/1-dara

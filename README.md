@@ -4,7 +4,7 @@ A complete re-architecture of the original Python/FastAPI Real Estate API, rebui
 
  **Live API Docs:** YOUR_RENDER_URL/docs
  **GitHub:** <https://github.com/1-dara/real-estate-ts>
- **Original Python Version:** <https://real-estate-api-1-6678.onrender.com/docs>
+ **Original Python Version:** <https://real-estate-api-1-6678.onrender.com/>
 
 -----
 
@@ -25,6 +25,8 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 - **Role-based Access** — Only agents can create, update, and delete properties
 - **Average Ratings** — Computed and returned on every property response
 - **TypeScript** — Fully typed codebase with strict mode, interfaces, and custom request types
+- **Redis Caching** — Property listings and detail pages cached for 5 minutes, reducing database load on repeated requests
+
 
 -----
 
@@ -42,6 +44,7 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |Cloudinary|Image storage                        |
 |Multer    |File upload handling                 |
 |Render    |Deployment                           |
+|Redis     |Deployment                           |
 
 -----
 
@@ -56,6 +59,7 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |Async     |Native async/await      |Native async/await                |
 |API Docs  |Auto-generated (FastAPI)|swagger-jsdoc + swagger-ui-express|
 |Auth      |OAuth2 + JWT            |JWT                               |
+|Caching   |Redis                   |Redis                             |
 
 -----
 
@@ -122,6 +126,7 @@ CLOUDINARY_CLOUD_NAME="your-cloud-name"
 CLOUDINARY_API_KEY="your-api-key"
 CLOUDINARY_API_SECRET="your-api-secret"
 PORT=3002
+REDIS_URL="your-redis-url"
 ```
 
 1. **Generate Prisma client**

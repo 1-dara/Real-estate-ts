@@ -2,8 +2,8 @@
 
 A complete re-architecture of the original Python/FastAPI Real Estate API, rebuilt in **TypeScript** with **Node.js**, **Express**, **Prisma ORM**, and **PostgreSQL**. Deployed and live.
 
- **Live API Docs:** YOUR_RENDER_URL/docs
-
+ **Live API Docs:** <https://real-estate-ts.onrender.com>
+ 
  **GitHub:** <https://github.com/1-dara/real-estate-ts>
 
  **Original Python Version:** <https://real-estate-api-1-6678.onrender.com/>

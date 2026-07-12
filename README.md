@@ -28,6 +28,8 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 - **Average Ratings** — Computed and returned on every property response
 - **TypeScript** — Fully typed codebase with strict mode, interfaces, and custom request types
 - **Redis Caching** — Property listings and detail pages cached for 5 minutes, reducing database load on repeated requests
+- **Rate Limiting** — 100 requests per minute per IP address using express-rate-limit
+
 
 
 -----
@@ -47,6 +49,7 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |Multer    |File upload handling                 |
 |Render    |Deployment                           |
 |Redis     |Caching layer for property/product/course listings|
+|express rate limit|Rate limiting middleware |
 
 -----
 
@@ -62,6 +65,7 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |API Docs  |Auto-generated (FastAPI)|swagger-jsdoc + swagger-ui-express|
 |Auth      |OAuth2 + JWT            |JWT                               |
 |Caching   |Redis                   |Redis                             |
+|Rate Limiting|slowapi|express rate limit|
 
 -----
 

@@ -8,10 +8,19 @@ import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
+
 
 
 const app = express();
 app.use(express.json());
+const limiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 100,
+    message: { error: 'Too many requests, please try again later' }
+});
+app.use(limiter);
+
 app.use(cors());
 
 const swaggerOptions = {

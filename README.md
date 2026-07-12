@@ -12,8 +12,7 @@ A complete re-architecture of the original Python/FastAPI Real Estate API, rebui
 
 ## Why This Project
 
-This is a deliberate cross-stack re-architecture of an existing production-style system. The original was built with Python and FastAPI. This version rebuilds the same features and business logic in TypeScript and Node.js — demonstrating the ability to work across languages, compare architectural decisions, and re-architect real systems. Containerized with Docker for consistent deployment across environments
-
+This is a deliberate cross-stack re-architecture of an existing production-style system. The original was built with Python and FastAPI. This version rebuilds the same features and business logic in TypeScript and Node.js — demonstrating the ability to work across languages, compare architectural decisions, and re-architect real systems. 
 
 -----
 
@@ -30,6 +29,8 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 - **TypeScript** — Fully typed codebase with strict mode, interfaces, and custom request types
 - **Redis Caching** — Property listings and detail pages cached for 5 minutes, reducing database load on repeated requests
 - **Rate Limiting** — 100 requests per minute per IP address using express-rate-limit
+- **Docker** — fully containerized with Dockerfile and docker-compose for consistent deployment
+
 
 
 
@@ -51,6 +52,8 @@ This is a deliberate cross-stack re-architecture of an existing production-style
 |Render    |Deployment                           |
 |Redis     |Caching layer for property/product/course listings|
 |express rate limit|Rate limiting middleware |
+| Docker | Containerization |
+
 
 -----
 

@@ -12,7 +12,8 @@ A complete re-architecture of the original Python/FastAPI Real Estate API, rebui
 
 ## Why This Project
 
-This is a deliberate cross-stack re-architecture of an existing production-style system. The original was built with Python and FastAPI. This version rebuilds the same features and business logic in TypeScript and Node.js — demonstrating the ability to work across languages, compare architectural decisions, and re-architect real systems.
+This is a deliberate cross-stack re-architecture of an existing production-style system. The original was built with Python and FastAPI. This version rebuilds the same features and business logic in TypeScript and Node.js — demonstrating the ability to work across languages, compare architectural decisions, and re-architect real systems. Containerized with Docker for consistent deployment across environments
+
 
 -----
 
